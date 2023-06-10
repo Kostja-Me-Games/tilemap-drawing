@@ -38,6 +38,7 @@ public class Building : MonoBehaviour
         if (!Placed)
         {
             Placed = true;
+            
         }
     }
     // Start is called before the first frame update
