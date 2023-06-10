@@ -77,14 +77,18 @@ public class paintbrush : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int cell = gridLayout.WorldToCell(mousePos);
+        
         // check if the mouse button is pressed
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && building == null)
         {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3Int cell = gridLayout.WorldToCell(mousePos);
+            Debug.Log(cell);
+            Debug.Log("mouse button pressed");
             // check if the mouse is over the tilemap
             if (MainTilemap.HasTile(cell))
             {
+                Debug.Log("mouse over tilemap");
                 // set the tile
                 MainTilemap.SetTile(cell, tile);
             }
@@ -96,8 +100,6 @@ public class paintbrush : MonoBehaviour
             {
                 building.Place();
                 clearBrushBuilding();
-                MainTilemap.CompressBounds();
-                MainTilemap.RefreshAllTiles();
             }
         }
 
