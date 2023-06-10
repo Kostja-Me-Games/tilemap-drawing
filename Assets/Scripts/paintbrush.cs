@@ -53,7 +53,7 @@ public class paintbrush : MonoBehaviour
     {
         if (building != null)
         {
-            Destroy(building);
+            Destroy(building.gameObject);
         }
     }
 
