@@ -71,11 +71,6 @@ public class paintbrush : MonoBehaviour
         }
     }
 
-    // public void CanTakeArea(BoundsInt area)
-    // {
-    //     TileBase[] baseArray = GetTilesBlock(area, MainTilemap);
-    // }
-
     private void Awake()
     {
         current = this;

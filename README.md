@@ -27,3 +27,9 @@ Problem: mouse click on buttons still caused tile paint. So i made a panel, adde
 didn't allow drawing if mouse over panel.
 
 Loom: https://www.loom.com/share/a854b1c220dc40ef9b56a4ddf2b3f423
+
+
+## Made a bit of cleanup and added sand and concrete tiles
+
+![Screenshot](Previews/added_concrete_and_sand.png)
+
