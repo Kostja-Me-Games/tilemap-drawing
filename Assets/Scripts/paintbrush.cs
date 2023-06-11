@@ -81,12 +81,42 @@ public class paintbrush : MonoBehaviour
         ClearArea();
         // Get a cell 
         building.area.position = gridLayout.WorldToCell(building.transform.position);
+        // get tiles block from MainTilemap
+        TileBase[] groundTilesInBuildingArea = MainTilemap.GetTilesBlock(building.area);
+        int sizeOfGroundTiles = groundTilesInBuildingArea.Length;
         BoundsInt buildingArea = building.area;
-        TileBase[] tileArray = new TileBase[buildingArea.size.x * buildingArea.size.y * buildingArea.size.z];
-        FillTiles(tileArray, "white");
-        
+        TileBase[] tileArray = new TileBase[sizeOfGroundTiles];
+
+        for (int i = 0; i < groundTilesInBuildingArea.Length; i++)
+        {
+            // only allow building on grass
+            if (groundTilesInBuildingArea[i] == tiles["grass"])
+            {
+                tileArray[i] = tiles["white"];
+            }
+            else
+            {
+                FillTiles(tileArray, "red");
+                break;
+
+            }
+        }
+
         TempTilemap.SetTilesBlock(buildingArea, tileArray);
         prevArea = buildingArea;
+    }
+
+    public bool AreaCanBeTaken(BoundsInt area)
+    {
+        TileBase[] arrayOfTiles = MainTilemap.GetTilesBlock(area);
+        foreach (TileBase tile in arrayOfTiles)
+        {
+            if (tile != tiles["grass"])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void ClearArea()
@@ -102,12 +132,12 @@ public class paintbrush : MonoBehaviour
             arr[i] = current.tiles[type];
         }
     }
-
-    public void PaveWithConcrete(BoundsInt area)
+    
+    public void TakeArea(BoundsInt area)
     {
-        TileBase[] tilesToPave = new TileBase[area.size.x * area.size.y * area.size.z];
-        FillTiles(tilesToPave, "concrete");
-        MainTilemap.SetTilesBlock(area, tilesToPave);
+        TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
+        FillTiles(tilesToTake, "concrete");
+        MainTilemap.SetTilesBlock(area, tilesToTake);
         ClearArea();
     }
 
@@ -154,8 +184,11 @@ public class paintbrush : MonoBehaviour
             {
                 if (building != null)
                 {
-                    building.Place();
-                    building = null;
+                    if (building.CanBePlacedHere())
+                    {
+                        building.Place();
+                        building = null;
+                    }
                 }
             }
         

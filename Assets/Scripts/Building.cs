@@ -35,13 +35,21 @@ public class Building : MonoBehaviour
             transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
         }
     }
+
+    public bool CanBePlacedHere()
+    {
+        BoundsInt newArea = area;
+        newArea.position = paintbrush.current.gridLayout.LocalToCell(transform.position);
+        return paintbrush.current.AreaCanBeTaken(newArea);
+    }
+
     public void Place()
     {
         if (!Placed)
         {
             Placed = true;
             ChangeOpacity(1f);
-            paintbrush.current.PaveWithConcrete(area);
+            paintbrush.current.TakeArea(area);
         }
     }
     private void ChangeOpacity(float opacity)
