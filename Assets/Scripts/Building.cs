@@ -24,6 +24,7 @@ public class Building : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            paintbrush.current.FollowBuilding();
         }
     }
     private void OnMouseUp()
@@ -40,6 +41,7 @@ public class Building : MonoBehaviour
         {
             Placed = true;
             ChangeOpacity(1f);
+            paintbrush.current.PaveWithConcrete(area);
         }
     }
     private void ChangeOpacity(float opacity)

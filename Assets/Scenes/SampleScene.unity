@@ -245,7 +245,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5254902}
   m_Origin: {x: -9, y: -5, z: 0}
   m_Size: {x: 18, y: 10, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -4212,6 +4212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridLayout: {fileID: 1932168015}
   MainTilemap: {fileID: 277471900}
+  TempTilemap: {fileID: 31288293}
   tile: {fileID: 0}
   mouseOverPanel: {fileID: 623327183}
   building: {fileID: 0}

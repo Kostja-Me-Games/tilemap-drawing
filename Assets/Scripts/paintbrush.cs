@@ -11,12 +11,16 @@ public class paintbrush : MonoBehaviour
     
     public GridLayout gridLayout; //Grid Object
     public Tilemap MainTilemap; //Main tilemap
-
+    public Tilemap TempTilemap; //Temp tilemap
     public Tile tile;
     // array of Tile objects with string key
     public Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
     public MouseOverPanel mouseOverPanel;
     public Building building;
+    
+    // to clear the area of previous location of unplaced building on temp tilemap
+    private BoundsInt prevArea;
+    
     public void setBrush(string brushName)
     {
         
@@ -61,6 +65,7 @@ public class paintbrush : MonoBehaviour
         clearBrush();
         Vector3 position = gridLayout.CellToLocalInterpolated(new Vector3(.5f, .5f, 0f));
         building = Instantiate(prefab, position, Quaternion.identity).GetComponent<Building>();
+        FollowBuilding();
     }
 
     public void clearBrushBuilding()
@@ -69,6 +74,41 @@ public class paintbrush : MonoBehaviour
         {
             Destroy(building.gameObject);
         }
+    }
+
+    public void FollowBuilding()
+    {
+        ClearArea();
+        // Get a cell 
+        building.area.position = gridLayout.WorldToCell(building.transform.position);
+        BoundsInt buildingArea = building.area;
+        TileBase[] tileArray = new TileBase[buildingArea.size.x * buildingArea.size.y * buildingArea.size.z];
+        FillTiles(tileArray, "white");
+        
+        TempTilemap.SetTilesBlock(buildingArea, tileArray);
+        prevArea = buildingArea;
+    }
+
+    private void ClearArea()
+    {
+        TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
+        FillTiles(tilesToClear, "empty");
+        TempTilemap.SetTilesBlock(prevArea, tilesToClear);
+    }
+    private static void FillTiles(TileBase[] arr, string type)
+    {
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = current.tiles[type];
+        }
+    }
+
+    public void PaveWithConcrete(BoundsInt area)
+    {
+        TileBase[] tilesToPave = new TileBase[area.size.x * area.size.y * area.size.z];
+        FillTiles(tilesToPave, "concrete");
+        MainTilemap.SetTilesBlock(area, tilesToPave);
+        ClearArea();
     }
 
     private void Awake()
@@ -86,6 +126,7 @@ public class paintbrush : MonoBehaviour
         tiles.Add("concrete", Resources.Load<Tile>("tiles/Concrete"));
         tiles.Add("white", Resources.Load<Tile>("tiles/White"));
         tiles.Add("red", Resources.Load<Tile>("tiles/Red"));
+        tiles.Add("empty", null);
     }
     // Update is called once per frame
     void Update()
