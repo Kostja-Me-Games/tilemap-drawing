@@ -36,3 +36,8 @@ Loom: https://www.loom.com/share/a854b1c220dc40ef9b56a4ddf2b3f423
 ## Compacted Panel and made buildings and tile brushes as icons
 
 ![Screenshot]](Previews/compacted_panel.png)
+
+## Made the area under the building turn white to show where building will be placed
+
+Loom: https://www.loom.com/share/c7d1321675404c2085c56041857404c6
+
