@@ -29,21 +29,30 @@ public class paintbrush : MonoBehaviour
     }
 
     public void setDirtBrush() {
-        Debug.Log("setDirtBrush");
+
         setBrush("dirt");
-        Debug.Log(tile);
+
     }
     
     public void setGrassBrush() {
-        Debug.Log("setGrassBrush");
+
         setBrush("grass");
-        Debug.Log(tile);
+
     }
     
     public void setWaterBrush() {
-        Debug.Log("setWaterBrush");
+
         setBrush("water");
-        Debug.Log(tile);
+
+    }
+    public void setConcreteBrush() {
+        setBrush("concrete");
+
+    }
+    public void setSandBrush() {
+
+        setBrush("sand");
+
     }
 
     public void setBrushBuilding(GameObject prefab)
@@ -62,6 +71,11 @@ public class paintbrush : MonoBehaviour
         }
     }
 
+    // public void CanTakeArea(BoundsInt area)
+    // {
+    //     TileBase[] baseArray = GetTilesBlock(area, MainTilemap);
+    // }
+
     private void Awake()
     {
         current = this;
@@ -74,6 +88,8 @@ public class paintbrush : MonoBehaviour
         tiles.Add("dirt", Resources.Load<Tile>("tiles/dirt"));
         tiles.Add("grass", Resources.Load<Tile>("tiles/grass"));
         tiles.Add("water", Resources.Load<Tile>("tiles/water"));
+        tiles.Add("concrete", Resources.Load<Tile>("tiles/concrete"));
+        tiles.Add("sand", Resources.Load<Tile>("tiles/sand"));
         // Load a tile named "blue" in the folder (Tiles) into the tile variable
         setBrush("dirt");
         Debug.Log(tile);
