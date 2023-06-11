@@ -8,6 +8,7 @@ public class Building : MonoBehaviour
     public bool Placed { get; private set; }
     
     public BoundsInt area;
+    private SpriteRenderer spriteRenderer;
 
     private void OnMouseDOwn()
     {
@@ -38,13 +39,26 @@ public class Building : MonoBehaviour
         if (!Placed)
         {
             Placed = true;
-            
+            ChangeOpacity(1f);
         }
+    }
+    private void ChangeOpacity(float opacity)
+    {
+        // Get the current color of the sprite
+        Color spriteColor = spriteRenderer.color;
+
+        // Set the new alpha value (opacity)
+        spriteColor.a = opacity;
+
+        // Assign the updated color back to the sprite
+        spriteRenderer.color = spriteColor;
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        // get a sprite renderer component of a child element called "Sprite"
+        spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+        ChangeOpacity(0.5f);
     }
 
     // Update is called once per frame
