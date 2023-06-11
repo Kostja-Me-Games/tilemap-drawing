@@ -80,15 +80,12 @@ public class paintbrush : MonoBehaviour
     void Start()
     {
         // Load all tiles into the dictionary tiles
-        tiles.Add("dirt", Resources.Load<Tile>("tiles/dirt"));
-        tiles.Add("grass", Resources.Load<Tile>("tiles/grass"));
-        tiles.Add("water", Resources.Load<Tile>("tiles/water"));
-        tiles.Add("concrete", Resources.Load<Tile>("tiles/concrete"));
-        tiles.Add("sand", Resources.Load<Tile>("tiles/sand"));
-        // Load a tile named "blue" in the folder (Tiles) into the tile variable
-        setBrush("dirt");
-        Debug.Log(tile);
-
+        tiles.Add("dirt", Resources.Load<Tile>("tiles/Dirt"));
+        tiles.Add("grass", Resources.Load<Tile>("tiles/Grass"));
+        tiles.Add("water", Resources.Load<Tile>("tiles/Water"));
+        tiles.Add("concrete", Resources.Load<Tile>("tiles/Concrete"));
+        tiles.Add("white", Resources.Load<Tile>("tiles/White"));
+        tiles.Add("red", Resources.Load<Tile>("tiles/Red"));
     }
     // Update is called once per frame
     void Update()
