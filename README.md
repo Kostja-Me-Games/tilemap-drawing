@@ -33,3 +33,6 @@ Loom: https://www.loom.com/share/a854b1c220dc40ef9b56a4ddf2b3f423
 
 ![Screenshot](Previews/added_concrete_and_sand.png)
 
+## Compacted Panel and made buildings and tile brushes as icons
+
+![Screenshot]](Previews/compacted_panel.png)
