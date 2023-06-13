@@ -12,6 +12,7 @@ public class paintbrush : MonoBehaviour
     public GridLayout gridLayout; //Grid Object
     public Tilemap MainTilemap; //Main tilemap
     public Tilemap TempTilemap; //Temp tilemap
+    public Tilemap BuildingsTilemap; //Buildings tilemap used to track buildings boundaries
     public Tile tile;
     // array of Tile objects with string key
     public Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
@@ -21,48 +22,48 @@ public class paintbrush : MonoBehaviour
     // to clear the area of previous location of unplaced building on temp tilemap
     private BoundsInt prevArea;
     
-    public void setBrush(string brushName)
-    {
-        
-        tile = tiles[brushName];
-        clearBrushBuilding();
-    }
-    public void clearBrush()
-    {
-        tile = null;
-    }
-
-    public void setDirtBrush() {
-
-        setBrush("dirt");
-
-    }
-    
-    public void setGrassBrush() {
-
-        setBrush("grass");
-
-    }
-    
-    public void setWaterBrush() {
-
-        setBrush("water");
-
-    }
-    public void setConcreteBrush() {
-        setBrush("concrete");
-
-    }
-    public void setSandBrush() {
-
-        setBrush("sand");
-
-    }
+    // public void setBrush(string brushName)
+    // {
+    //     
+    //     tile = tiles[brushName];
+    //     clearBrushBuilding();
+    // }
+    // public void clearBrush()
+    // {
+    //     tile = null;
+    // }
+    //
+    // public void setDirtBrush() {
+    //
+    //     setBrush("dirt");
+    //
+    // }
+    //
+    // public void setGrassBrush() {
+    //
+    //     setBrush("grass");
+    //
+    // }
+    //
+    // public void setWaterBrush() {
+    //
+    //     setBrush("water");
+    //
+    // }
+    // public void setConcreteBrush() {
+    //     setBrush("concrete");
+    //
+    // }
+    // public void setSandBrush() {
+    //
+    //     setBrush("sand");
+    //
+    // }
 
     public void setBrushBuilding(GameObject prefab)
     {
         clearBrushBuilding();
-        clearBrush();
+        // clearBrush();
         Vector3 position = gridLayout.CellToLocalInterpolated(new Vector3(.5f, .5f, 0f));
         building = Instantiate(prefab, position, Quaternion.identity).GetComponent<Building>();
         FollowBuilding();
