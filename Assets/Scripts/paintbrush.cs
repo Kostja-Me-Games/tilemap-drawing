@@ -84,6 +84,7 @@ public class paintbrush : MonoBehaviour
         building.area.position = gridLayout.WorldToCell(building.transform.position);
         // get tiles block from MainTilemap
         TileBase[] groundTilesInBuildingArea = MainTilemap.GetTilesBlock(building.area);
+        TileBase[] buildingTilesInBuildingArea = BuildingsTilemap.GetTilesBlock(building.area);
         int sizeOfGroundTiles = groundTilesInBuildingArea.Length;
         BoundsInt buildingArea = building.area;
         TileBase[] tileArray = new TileBase[sizeOfGroundTiles];
@@ -91,7 +92,7 @@ public class paintbrush : MonoBehaviour
         for (int i = 0; i < groundTilesInBuildingArea.Length; i++)
         {
             // only allow building on grass
-            if (groundTilesInBuildingArea[i] == tiles["grass"])
+            if (groundTilesInBuildingArea[i] == tiles["grass"] && buildingTilesInBuildingArea[i] == tiles["empty"])
             {
                 tileArray[i] = tiles["white"];
             }
@@ -109,10 +110,11 @@ public class paintbrush : MonoBehaviour
 
     public bool AreaCanBeTaken(BoundsInt area)
     {
-        TileBase[] arrayOfTiles = MainTilemap.GetTilesBlock(area);
-        foreach (TileBase tile in arrayOfTiles)
+        TileBase[] groundArrayOfTiles = MainTilemap.GetTilesBlock(area);
+        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
+        for (int i = 0; i < groundArrayOfTiles.Length; i++)
         {
-            if (tile != tiles["grass"])
+            if (groundArrayOfTiles[i] != tiles["grass"] || buildingsArrayOfTiles[i] != tiles["empty"])
             {
                 return false;
             }
@@ -138,7 +140,7 @@ public class paintbrush : MonoBehaviour
     {
         TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
         FillTiles(tilesToTake, "concrete");
-        MainTilemap.SetTilesBlock(area, tilesToTake);
+        BuildingsTilemap.SetTilesBlock(area, tilesToTake);
         ClearArea();
     }
 
