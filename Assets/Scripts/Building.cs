@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Building : MonoBehaviour
 {
     
@@ -9,8 +10,8 @@ public class Building : MonoBehaviour
     
     public BoundsInt area;
     private SpriteRenderer spriteRenderer;
-
-    private void OnMouseDOwn()
+	public Animator animator;
+    private void OnMouseDown()
     {
         if (!Placed)
         {
@@ -50,6 +51,13 @@ public class Building : MonoBehaviour
             Placed = true;
             ChangeOpacity(1f);
             paintbrush.current.TakeArea(area);
+			// get animator and set the "Placed" trigger
+            if (animator != null) {
+				animator.SetBool("Placed", true);
+			}
+
+
+		    
         }
     }
     private void ChangeOpacity(float opacity)
@@ -63,10 +71,14 @@ public class Building : MonoBehaviour
         // Assign the updated color back to the sprite
         spriteRenderer.color = spriteColor;
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        // get a sprite renderer component of a child element called "Sprite"
+		// try / catch to avoid errors if the animator or sprite renderer are not found
+		try {animator = transform.Find("Sprite").GetComponent<Animator>();}
+        catch {}
+		
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         ChangeOpacity(0.5f);
     }
