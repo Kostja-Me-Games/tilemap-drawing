@@ -22,44 +22,6 @@ public class paintbrush : MonoBehaviour
     // to clear the area of previous location of unplaced building on temp tilemap
     private BoundsInt prevArea;
     
-    // public void setBrush(string brushName)
-    // {
-    //     
-    //     tile = tiles[brushName];
-    //     clearBrushBuilding();
-    // }
-    // public void clearBrush()
-    // {
-    //     tile = null;
-    // }
-    //
-    // public void setDirtBrush() {
-    //
-    //     setBrush("dirt");
-    //
-    // }
-    //
-    // public void setGrassBrush() {
-    //
-    //     setBrush("grass");
-    //
-    // }
-    //
-    // public void setWaterBrush() {
-    //
-    //     setBrush("water");
-    //
-    // }
-    // public void setConcreteBrush() {
-    //     setBrush("concrete");
-    //
-    // }
-    // public void setSandBrush() {
-    //
-    //     setBrush("sand");
-    //
-    // }
-
     public void setBrushBuilding(GameObject prefab)
     {
         clearBrushBuilding();

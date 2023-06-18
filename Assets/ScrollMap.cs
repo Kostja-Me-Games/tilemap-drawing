@@ -7,7 +7,7 @@ public class ScrollMap : MonoBehaviour
     public Tilemap tilemap; //Main tilemap
     // Start is called before the first frame update
     public float scrollSpeed = 0.0f;
-    public float scrollZoneSize = 50f;
+    public float scrollZoneSize = 8f;
     public MouseOverPanel mouseOverPanel;
     public zoom zoom;
     public float panelWidth = 0.0f;
@@ -15,8 +15,6 @@ public class ScrollMap : MonoBehaviour
     {
         Vector3 newPosition = transform.position + direction * scrollSpeed * Time.deltaTime;
         Vector3Int mapSize = tilemap.size;
-        Debug.Log("mapSize");
-        Debug.Log(mapSize);
         Vector3 clampedPosition = new Vector3(
             Mathf.Clamp(newPosition.x, -mapSize.x / 2f, mapSize.x / 2f),
             Mathf.Clamp(newPosition.y, -mapSize.y / 2f, mapSize.y / 2f),
@@ -51,7 +49,7 @@ public class ScrollMap : MonoBehaviour
         {
             MoveCamera(Vector3.left);
         }
-        else if (mousePosition.x > Screen.width - scrollZoneSize - panelWidth)
+        else if (mousePosition.x > Screen.width - scrollZoneSize)
         {
             MoveCamera(Vector3.right);
         }
