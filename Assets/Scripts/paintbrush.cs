@@ -135,6 +135,11 @@ public class paintbrush : MonoBehaviour
                 building.Place();
                 building = null;
             }
+            if (Input.GetMouseButton(1) && building != null)
+            {
+                clearBrushBuilding();
+                ClearArea();
+            }
         }
     }
 }
