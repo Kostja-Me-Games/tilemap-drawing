@@ -27,7 +27,7 @@ public class Building : MonoBehaviour
     {
         if (!Placed)
         {
-            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+    		Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
             transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
         }
     }
