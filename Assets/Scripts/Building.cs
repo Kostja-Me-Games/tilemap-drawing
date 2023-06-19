@@ -21,18 +21,13 @@ public class Building : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (!Placed)
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            paintbrush.current.FollowBuilding();
-        }
+        
     }
     private void OnMouseUp()
     {
         if (!Placed)
         {
-            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+    		Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
             transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
         }
     }
@@ -86,6 +81,14 @@ public class Building : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!Placed)
+        {
+			
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+			Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+            transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
+            paintbrush.current.FollowBuilding();
+        }
     }
 }

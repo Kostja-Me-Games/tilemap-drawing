@@ -25,8 +25,9 @@ public class paintbrush : MonoBehaviour
     public void setBrushBuilding(GameObject prefab)
     {
         clearBrushBuilding();
-        // clearBrush();
-        Vector3 position = gridLayout.CellToLocalInterpolated(new Vector3(.5f, .5f, 0f));
+        
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 position = gridLayout.CellToLocalInterpolated(new Vector3(mousePos.x, mousePos.y, 0));
         building = Instantiate(prefab, position, Quaternion.identity).GetComponent<Building>();
         FollowBuilding();
     }
@@ -129,34 +130,16 @@ public class paintbrush : MonoBehaviour
         if (!mouseOverPanel.isMouseOver)
         {
             // check if the mouse button is pressed
-            if (Input.GetMouseButton(0) && tile != null && building == null)
+            if (Input.GetMouseButton(0) && building != null && building.CanBePlacedHere())
             {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3Int cell = gridLayout.WorldToCell(mousePos);
-                Debug.Log(cell);
-                Debug.Log("mouse button pressed");
-                // check if the mouse is over the tilemap
-                if (MainTilemap.HasTile(cell))
-                {
-                    Debug.Log("mouse over tilemap");
-                    // set the tile
-                    MainTilemap.SetTile(cell, tile);
-                }
+                building.Place();
+                building = null;
+            }
+            if (Input.GetMouseButton(1) && building != null)
+            {
+                clearBrushBuilding();
+                ClearArea();
             }
         }
-            // if Enter/Return button pressed
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                if (building != null)
-                {
-                    if (building.CanBePlacedHere())
-                    {
-                        building.Place();
-                        building = null;
-                    }
-                }
-            }
-        
-
     }
 }
