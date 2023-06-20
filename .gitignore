@@ -33,3 +33,5 @@
 
 # Build artifacts
 /Builds/*
+.vscode
+

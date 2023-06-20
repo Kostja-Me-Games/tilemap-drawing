@@ -61,11 +61,47 @@ void Update()
         
         
  }
+
+ if (Input.GetMouseButtonDown(1)) {
+            // Right Mouse Button Pressed
+            Vector3 moveToPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            List<Vector3> targetPositionList = GetPositionListAround(moveToPosition, new float[] { 3f, 3f, 3f }, new int[] { 5, 10, 20 });
+
+            int targetPositionListIndex = 0;
+
+            foreach (RTSUnit rtsUnit in selectedRTSUnitList) {
+                rtsUnit.MoveTo(targetPositionList[targetPositionListIndex]);
+                targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;
+            }
+        }
 }
 void Start()
     {
     }
 
     // Update is called once per frame
-    
+    private List<Vector3> GetPositionListAround(Vector3 startPosition, float[] ringDistanceArray, int[] ringPositionCountArray) {
+        List<Vector3> positionList = new List<Vector3>();
+        positionList.Add(startPosition);
+        for (int i = 0; i < ringDistanceArray.Length; i++) {
+            positionList.AddRange(GetPositionListAround(startPosition, ringDistanceArray[i], ringPositionCountArray[i]));
+        }
+        return positionList;
+    }
+
+    private List<Vector3> GetPositionListAround(Vector3 startPosition, float distance, int positionCount) {
+        List<Vector3> positionList = new List<Vector3>();
+        for (int i = 0; i < positionCount; i++) {
+            float angle = i * (360f / positionCount);
+            Vector3 dir = ApplyRotationToVector(new Vector3(1, 0), angle);
+            Vector3 position = startPosition + dir * distance;
+            positionList.Add(position);
+        }
+        return positionList;
+    }
+
+    private Vector3 ApplyRotationToVector(Vector3 vec, float angle) {
+        return Quaternion.Euler(0, 0, angle) * vec;
+    }
 }
