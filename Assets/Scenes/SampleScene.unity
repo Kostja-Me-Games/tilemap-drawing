@@ -10297,6 +10297,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2610082682940898740, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2610082682940898740, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1544594191
+      objectReference: {fileID: 0}
     - target: {fileID: 4914170334906486204, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10344,6 +10352,14 @@ PrefabInstance:
     - target: {fileID: 4914170334906486205, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
       propertyPath: m_Name
       value: Harvester (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914170336390022981, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914170336390022981, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1544594191
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1347394455722278121, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}

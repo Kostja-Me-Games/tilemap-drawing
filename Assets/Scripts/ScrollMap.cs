@@ -7,7 +7,7 @@ public class ScrollMap : MonoBehaviour
     public Tilemap tilemap; //Main tilemap
     // Start is called before the first frame update
     public float scrollSpeed = 0.0f;
-    public float scrollZoneSize = 12f;
+    public float scrollZoneSize = 25f;
     public MouseOverPanel mouseOverPanel;
     public zoom zoom;
     public float panelWidth = 0.0f;
