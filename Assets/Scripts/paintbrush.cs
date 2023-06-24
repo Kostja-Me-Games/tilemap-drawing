@@ -15,7 +15,7 @@ public class paintbrush : MonoBehaviour
     public Tilemap BuildingsTilemap; //Buildings tilemap used to track buildings boundaries
     public Tile tile;
     // array of Tile objects with string key
-    public Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
+    [SerializeField] public Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
     public MouseOverPanel mouseOverPanel;
     public Building building;
     
@@ -109,16 +109,28 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToTake, "concrete");
         BuildingsTilemap.SetTilesBlock(area, tilesToTake);
         ClearArea();
+        Debug.Log("TakeArea");
+        Debug.Log(area);
+    }
+
+    public BoundsInt GetAreaByTransform(Transform transform, BoundsInt area)
+    {
+        area.position = gridLayout.WorldToCell(transform.position);
+        return area;
+    }
+
+    public void TakeAreaTile(BoundsInt area, string tile)
+    {
+        TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
+        FillTiles(tilesToTake, tile);
+        BuildingsTilemap.SetTilesBlock(area, tilesToTake);
+        Debug.Log("TakeAreaTile");
+        Debug.Log(area);
     }
 
     private void Awake()
     {
         current = this;
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
         // Load all tiles into the dictionary tiles
         tiles.Add("dirt", Resources.Load<Tile>("tiles/Dirt"));
         tiles.Add("grass", Resources.Load<Tile>("tiles/Grass"));
@@ -126,7 +138,15 @@ public class paintbrush : MonoBehaviour
         tiles.Add("concrete", Resources.Load<Tile>("tiles/Concrete"));
         tiles.Add("white", Resources.Load<Tile>("tiles/White"));
         tiles.Add("red", Resources.Load<Tile>("tiles/Red"));
+        tiles.Add("urinium", Resources.Load<Tile>("tiles/Urinium"));
         tiles.Add("empty", null);
+        // Debug.Log keys of tiles array
+    }
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
     // Update is called once per frame
     void Update()

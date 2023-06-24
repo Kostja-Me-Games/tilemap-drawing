@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 161223189053016353}
   - component: {fileID: 7444122453537272700}
+  - component: {fileID: 986033187688594993}
   m_Layer: 0
   m_Name: Urinium Crystal
   m_TagString: Untagged
@@ -143,3 +144,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &986033187688594993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6970674376076181866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19e413d2fde604621a67507c375ca34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 1, y: 1, z: 1}
