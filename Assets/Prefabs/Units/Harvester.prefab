@@ -76,6 +76,10 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   spriteTransform: {fileID: 0}
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 1, y: 1, z: 1}
+  pb: {fileID: 0}
 --- !u!1 &4914170336390022983
 GameObject:
   m_ObjectHideFlags: 0

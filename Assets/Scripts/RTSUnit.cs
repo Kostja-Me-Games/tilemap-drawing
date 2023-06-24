@@ -7,10 +7,14 @@ public class RTSUnit : MonoBehaviour
     private GameObject selectedGameObject;
     public Vector3 startPosition;
     public Vector3 endPosition;
-        public Transform spriteTransform;
+    public Transform spriteTransform;
+    public BoundsInt area;
+    public paintbrush pb;
 
 	private void Start() {
         spriteTransform = transform.Find("Sprite").transform;
+        pb = GameObject.Find("Grid").GetComponent<paintbrush>();
+        UpdateTakenArea(true);
     }
     private void Awake() {
         selectedGameObject = transform.Find("Selected").gameObject;
@@ -28,22 +32,22 @@ public class RTSUnit : MonoBehaviour
 
     public void MoveTo(Vector3 endPos) {
         endPosition = endPos;
-                startPosition = transform.position;
-                endPosition.z = 0;
-                Vector2 vectorToTarget = endPosition - startPosition;
-                float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
-                spriteTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        startPosition = transform.position;
+        endPosition.z = 0;
+        Vector2 vectorToTarget = endPosition - startPosition;
+        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+        spriteTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
     public void StartMoving() {
-        	// start moving towards the end position
-            
-            transform.position = Vector3.MoveTowards(transform.position, endPosition, 2 * Time.deltaTime);
-            if (transform.position == endPosition)
-            {
-                SetMoving(false);
-            }else {
-                SetMoving(true);
-            }
+        // start moving towards the end position
+
+        transform.position = Vector3.MoveTowards(transform.position, endPosition, 2 * Time.deltaTime);
+        if (transform.position == endPosition)
+        {
+            SetMoving(false);
+        } else {
+            SetMoving(true);
+        }
     }
 
     public void SetMoving(bool moving) {
@@ -51,12 +55,23 @@ public class RTSUnit : MonoBehaviour
         transform.Find("Sprite").GetComponent<Animator>().SetBool("Moving", moving);	
     }
 
+
+    public void UpdateTakenArea(bool initial = false) {
+        pb.ClearArea(area);
+        BoundsInt newArea = pb.GetAreaByPosition(
+            pb.GetTileCenterPosition(transform.position),
+            area);
+        pb.TakeAreaTile(newArea, "under_unit");
+        area = newArea;
+    }
     void Update()
     {
-        
+        UpdateTakenArea();
         if (transform.position != endPosition && endPosition != Vector3.zero)
         {
+            
             StartMoving();
+            
         }
     }
 }

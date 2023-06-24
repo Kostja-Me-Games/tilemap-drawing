@@ -95,6 +95,14 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToClear, "empty");
         TempTilemap.SetTilesBlock(prevArea, tilesToClear);
     }
+    public void ClearArea(BoundsInt prevArea)
+    {
+        Debug.Log("ClearArea " + prevArea.ToString());
+        TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
+        FillTiles(tilesToClear, "empty");
+        BuildingsTilemap.SetTilesBlock(prevArea, tilesToClear);
+    }
+
     private static void FillTiles(TileBase[] arr, string type)
     {
         for (int i = 0; i < arr.Length; i++)
@@ -109,13 +117,11 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToTake, "concrete");
         BuildingsTilemap.SetTilesBlock(area, tilesToTake);
         ClearArea();
-        Debug.Log("TakeArea");
-        Debug.Log(area);
     }
 
-    public BoundsInt GetAreaByTransform(Transform transform, BoundsInt area)
+    public BoundsInt GetAreaByPosition(Vector3 pos, BoundsInt area)
     {
-        area.position = gridLayout.WorldToCell(transform.position);
+        area.position = gridLayout.WorldToCell(pos);
         return area;
     }
     
@@ -128,11 +134,10 @@ public class paintbrush : MonoBehaviour
     }
     public void TakeAreaTile(BoundsInt area, string tile)
     {
+        Debug.Log("TakeAreaTile");
         TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
         FillTiles(tilesToTake, tile);
         BuildingsTilemap.SetTilesBlock(area, tilesToTake);
-        Debug.Log("TakeAreaTile");
-        Debug.Log(area);
     }
 
     private void Awake()
@@ -146,6 +151,7 @@ public class paintbrush : MonoBehaviour
         tiles.Add("white", Resources.Load<Tile>("tiles/White"));
         tiles.Add("red", Resources.Load<Tile>("tiles/Red"));
         tiles.Add("urinium", Resources.Load<Tile>("tiles/Urinium"));
+        tiles.Add("under_unit", Resources.Load<Tile>("tiles/UnderUnit"));
         tiles.Add("empty", null);
         // Debug.Log keys of tiles array
     }

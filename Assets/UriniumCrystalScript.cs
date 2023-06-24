@@ -12,8 +12,8 @@ public class UriniumCrystalScript : MonoBehaviour
       // find game object called "Grid" and get the paintbrush component
 
         pb = GameObject.Find("Grid").GetComponent<paintbrush>();   
-        BoundsInt newArea = pb.GetAreaByTransform(
-            transform,
+        BoundsInt newArea = pb.GetAreaByPosition(
+            transform.position,
             area
             );
         pb.TakeAreaTile(newArea, "urinium");
