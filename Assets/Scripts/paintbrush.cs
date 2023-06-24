@@ -28,8 +28,12 @@ public class paintbrush : MonoBehaviour
         
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 position = gridLayout.CellToLocalInterpolated(new Vector3(mousePos.x, mousePos.y, 0));
-        building = Instantiate(prefab, position, Quaternion.identity).GetComponent<Building>();
-        FollowBuilding();
+        // access prefab's ConstructionPropertiesController
+        ConstructionPropertiesController constructionPropertiesController = prefab.GetComponent<ConstructionPropertiesController>();
+        if (constructionPropertiesController.enoughCreditsToBuild()) {
+            building = Instantiate(prefab, position, Quaternion.identity).GetComponent<Building>();
+            FollowBuilding();
+        }
     }
 
     public void clearBrushBuilding()

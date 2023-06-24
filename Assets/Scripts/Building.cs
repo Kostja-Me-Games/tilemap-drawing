@@ -7,7 +7,7 @@ public class Building : MonoBehaviour
 {
     
     public bool Placed { get; private set; }
-    
+    ConstructionPropertiesController constructionPropertiesController;
     public BoundsInt area;
     private SpriteRenderer spriteRenderer;
 	public Animator animator;
@@ -43,15 +43,17 @@ public class Building : MonoBehaviour
     {
         if (!Placed)
         {
-            Placed = true;
-            ChangeOpacity(1f);
-            paintbrush.current.TakeArea(area);
-			// get animator and set the "Placed" trigger
-            if (animator != null) {
-				animator.SetBool("Placed", true);
-			}
-
-
+            bool result = constructionPropertiesController.Build();
+            if (result) 
+            {
+                Placed = true;
+                ChangeOpacity(1f);
+                paintbrush.current.TakeArea(area);
+                // get animator and set the "Placed" trigger
+                if (animator != null) {
+                    animator.SetBool("Placed", true);
+                }
+            }
 		    
         }
     }
@@ -70,6 +72,7 @@ public class Building : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        constructionPropertiesController = GetComponent<ConstructionPropertiesController>();
 		// try / catch to avoid errors if the animator or sprite renderer are not found
 		try {animator = transform.Find("Sprite").GetComponent<Animator>();}
         catch {}

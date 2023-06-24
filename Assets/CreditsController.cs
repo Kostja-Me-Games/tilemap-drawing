@@ -5,6 +5,10 @@ using TMPro;
 
 public class CreditsController : MonoBehaviour
 {
+
+    // singleton pattern
+    public static CreditsController instance;
+
     public int credits;
     public TextMeshProUGUI textMesh;
     public void AddCredits(int amount)
@@ -18,16 +22,21 @@ public class CreditsController : MonoBehaviour
         credits += amount;
     }
 
-    public void SubtractCredits(int amount)
+    public bool SubtractCredits(int amount)
     {
         // check that amount is positive
         if (amount < 0)
         {
             Debug.LogError("Cannot subtract negative credits");
-            return;
+            return false;
         }
-
+        if (CheckEnoughCredits(amount))
+        {
+            Debug.LogError("Cannot subtract credits when there are not enough credits");
+            return false;
+        }
         credits -= amount;
+        return true;
     }
 
     public bool CheckEnoughCredits(int amount)
@@ -38,6 +47,8 @@ public class CreditsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // set instance variable to this instance of the class
+        instance = this;
         // set textMesh variable to the TextMesh component on the same GameObject
         textMesh = GetComponent<TextMeshProUGUI>();
     }

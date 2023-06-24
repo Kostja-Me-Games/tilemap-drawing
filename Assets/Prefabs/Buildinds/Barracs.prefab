@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e41e4d91d0a26419983c9b26032101b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 1200
-  secondsToBuild: 100
+  cost: 300
+  secondsToBuild: 1
