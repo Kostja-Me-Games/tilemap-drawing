@@ -8,6 +8,7 @@ public class RTSController : MonoBehaviour
 public Vector3 startPosition;
 [SerializeField] private List<RTSUnit> selectedRTSUnitList;
 [SerializeField] private Transform selectionAreaTransform;
+public paintbrush pb;
 private void Awake() {
     selectedRTSUnitList = new List<RTSUnit>();
     selectionAreaTransform.gameObject.SetActive(false);
@@ -65,7 +66,7 @@ void Update()
  if (Input.GetMouseButtonDown(1)) {
             // Right Mouse Button Pressed
             Vector3 moveToPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+            moveToPosition = pb.GetTileCenterPosition(moveToPosition);
             List<Vector3> targetPositionList = GetPositionListAround(moveToPosition, new float[] { 3f, 3f, 3f }, new int[] { 5, 10, 20 });
 
             int targetPositionListIndex = 0;
@@ -78,6 +79,7 @@ void Update()
 }
 void Start()
     {
+        pb = GameObject.Find("Grid").GetComponent<paintbrush>();   
     }
 
     // Update is called once per frame

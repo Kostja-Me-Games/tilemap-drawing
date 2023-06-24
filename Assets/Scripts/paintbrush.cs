@@ -118,7 +118,14 @@ public class paintbrush : MonoBehaviour
         area.position = gridLayout.WorldToCell(transform.position);
         return area;
     }
-
+    
+    public Vector3 GetTileCenterPosition(Vector3 inputPosition)
+    {
+        Vector3 position = gridLayout.WorldToCell(inputPosition);
+        position.x += 0.5f;
+        position.y += 0.5f;
+        return position;
+    }
     public void TakeAreaTile(BoundsInt area, string tile)
     {
         TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
