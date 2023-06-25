@@ -10561,7 +10561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 136e943d642d44e3c88c575371c3c419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  credits: 3000
+  credits: 30000
   textMesh: {fileID: 0}
 --- !u!1001 &1019689309
 PrefabInstance:

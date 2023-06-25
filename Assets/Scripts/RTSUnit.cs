@@ -41,7 +41,30 @@ public class RTSUnit : MonoBehaviour
     public void StartMoving() {
         // start moving towards the end position
 
-        transform.position = Vector3.MoveTowards(transform.position, endPosition, 2 * Time.deltaTime);
+        
+        // save the new position in a new variable and check if the building tilemap tile is empty
+        Vector3 nextPosition = Vector3.MoveTowards(transform.position, endPosition, 2 * Time.deltaTime);
+        Vector3Int nextTilePosition = pb.WorldToCell(nextPosition);
+        BoundsInt nextArea = new BoundsInt(nextTilePosition.x, nextTilePosition.y, 0, 1, 1, 1);
+        bool nextAreaIsDifferent = !nextArea.Equals(area);
+        if (nextAreaIsDifferent) {
+            // we need to check if unit can step on the next tile
+            bool canMoveToNextArea = pb.AreaCanBeTravelled(nextArea);
+            if (!canMoveToNextArea) {
+                // if the tile is not empty, stop moving
+                SetMoving(false);
+                endPosition = transform.position;
+                return;
+            }
+            // if the tile is empty, move the unit to the new position
+            transform.position = nextPosition;
+            
+            
+        } else {
+            // it is still the same tile, so just keep moving
+            transform.position = nextPosition;
+            
+        }
         if (transform.position == endPosition)
         {
             SetMoving(false);
@@ -66,12 +89,11 @@ public class RTSUnit : MonoBehaviour
     }
     void Update()
     {
-        UpdateTakenArea();
+        
         if (transform.position != endPosition && endPosition != Vector3.zero)
         {
-            
-            StartMoving();
-            
+            StartMoving(); 
         }
+        UpdateTakenArea();
     }
 }

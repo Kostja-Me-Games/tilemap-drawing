@@ -88,7 +88,19 @@ public class paintbrush : MonoBehaviour
         }
         return true;
     }
-
+    public bool AreaCanBeTravelled(BoundsInt area)
+    {
+        TileBase[] groundArrayOfTiles = MainTilemap.GetTilesBlock(area);
+        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
+        for (int i = 0; i < groundArrayOfTiles.Length; i++)
+        {
+            if (groundArrayOfTiles[i] != tiles["grass"] || !(buildingsArrayOfTiles[i] == tiles["empty"] || buildingsArrayOfTiles[i] == tiles["urinium"]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     private void ClearArea()
     {
         TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
@@ -97,7 +109,6 @@ public class paintbrush : MonoBehaviour
     }
     public void ClearArea(BoundsInt prevArea)
     {
-        Debug.Log("ClearArea " + prevArea.ToString());
         TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
         FillTiles(tilesToClear, "empty");
         BuildingsTilemap.SetTilesBlock(prevArea, tilesToClear);
@@ -124,7 +135,10 @@ public class paintbrush : MonoBehaviour
         area.position = gridLayout.WorldToCell(pos);
         return area;
     }
-    
+    public Vector3Int WorldToCell(Vector3 inputPosition)
+    {
+        return gridLayout.WorldToCell(inputPosition);
+    }
     public Vector3 GetTileCenterPosition(Vector3 inputPosition)
     {
         Vector3 position = gridLayout.WorldToCell(inputPosition);
@@ -134,7 +148,6 @@ public class paintbrush : MonoBehaviour
     }
     public void TakeAreaTile(BoundsInt area, string tile)
     {
-        Debug.Log("TakeAreaTile");
         TileBase[] tilesToTake = new TileBase[area.size.x * area.size.y * area.size.z];
         FillTiles(tilesToTake, tile);
         BuildingsTilemap.SetTilesBlock(area, tilesToTake);
