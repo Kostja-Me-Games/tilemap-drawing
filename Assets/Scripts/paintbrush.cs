@@ -165,7 +165,7 @@ public class paintbrush : MonoBehaviour
         tiles.Add("red", Resources.Load<Tile>("tiles/Red"));
         tiles.Add("urinium", Resources.Load<Tile>("tiles/Urinium"));
         tiles.Add("under_unit", Resources.Load<Tile>("tiles/UnderUnit"));
-        tiles.Add("empty", null);
+        tiles.Add("empty", Resources.Load<Tile>("tiles/Empty"));
         // Debug.Log keys of tiles array
     }
     

@@ -5,21 +5,31 @@ using UnityEngine;
 public class RTSUnit : MonoBehaviour
 {
     private GameObject selectedGameObject;
+    public float movementSpeed = 5f;
     public Vector3 startPosition;
     public Vector3 endPosition;
     public Transform spriteTransform;
     public BoundsInt area;
     public paintbrush pb;
+    private Pathfinding pathfinding;
+    private int currentPathIndex = 0;
+    private bool isMoving = false;
+    [SerializeField] private List<Vector3Int> path;
+    [SerializeField] private Vector3Int startMapPosition;
+    [SerializeField] private Vector3Int destinationMapPosition;
 
+    private void Awake() {
+        selectedGameObject = transform.Find("Selected").gameObject;
+        SetSelectedVisible(false);
+        
+    }
 	private void Start() {
         spriteTransform = transform.Find("Sprite").transform;
         pb = GameObject.Find("Grid").GetComponent<paintbrush>();
         UpdateTakenArea(true);
+        pathfinding = new Pathfinding(pb.BuildingsTilemap);
     }
-    private void Awake() {
-        selectedGameObject = transform.Find("Selected").gameObject;
-        SetSelectedVisible(false);
-    }
+    
     
     public void SetSelectedVisible(bool visible) {
         selectedGameObject.SetActive(visible);	
@@ -30,11 +40,30 @@ public class RTSUnit : MonoBehaviour
         return selectedGameObject.activeSelf;
     }
 
+
     public void MoveTo(Vector3 endPos) {
+        Debug.Log("Moving to " + endPos);
+        // get current position on tilemap
+        startMapPosition = pb.WorldToCell(transform.position);
+        destinationMapPosition = pb.WorldToCell(endPos);
+        path = pathfinding.FindPath(startMapPosition, destinationMapPosition);
+        if (path != null && path.Count > 0) {
+            currentPathIndex = 0;
+            isMoving = true;
+        }
+
+    }
+    public void _MoveTo(Vector3 endPos) {
         endPosition = endPos;
         startPosition = transform.position;
         endPosition.z = 0;
         Vector2 vectorToTarget = endPosition - startPosition;
+        float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
+        spriteTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+    public void TurnToTargetPosition(Vector3 target) {
+        startPosition = transform.position;
+        Vector2 vectorToTarget = target - startPosition;
         float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg - 90;
         spriteTransform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
@@ -87,13 +116,41 @@ public class RTSUnit : MonoBehaviour
         pb.TakeAreaTile(newArea, "under_unit");
         area = newArea;
     }
+    private void MoveAlongPath()
+    {
+        if (path == null || path.Count == 0 || path.Count <= currentPathIndex)
+        {
+            // No valid path found
+            isMoving = false;
+            return;
+        }
+
+        // Move towards the next waypoint in the path
+        Vector3 targetPosition = pb.GetTileCenterPosition(path[currentPathIndex]);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
+        TurnToTargetPosition(targetPosition);
+        // Check if the unit has reached the current waypoint
+        if (transform.position == targetPosition)
+        {
+            // Move to the next waypoint
+            currentPathIndex++;
+
+            // Check if the unit has reached the end of the path
+            if (currentPathIndex >= path.Count)
+            {
+                // Reached the end of the path
+                isMoving = false;
+            }
+        }
+    }
     void Update()
     {
-        
-        if (transform.position != endPosition && endPosition != Vector3.zero)
-        {
-            StartMoving(); 
-        }
+        MoveAlongPath();
+        // if (transform.position != endPosition && endPosition != Vector3.zero)
+        // {
+        //     StartMoving(); 
+        // }
+        SetMoving(isMoving);
         UpdateTakenArea();
     }
 }
