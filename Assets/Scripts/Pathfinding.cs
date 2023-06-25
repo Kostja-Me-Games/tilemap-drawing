@@ -108,7 +108,7 @@ public class Pathfinding
     private bool IsWalkable(Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);
-        return tile == pb.tiles["empty"];
+        return tile == pb.tiles["empty"] || pb.tiles["urinium"];
     }
 
     private Node GetNodeWithLowestCost(HashSet<Node> nodeSet)
