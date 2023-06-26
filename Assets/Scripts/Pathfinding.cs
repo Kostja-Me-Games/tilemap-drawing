@@ -94,6 +94,11 @@ public class Pathfinding
             }
 
             Node node = new Node(position);
+            // check that position is not already in nodes
+            if (nodes.ContainsKey(position))
+            {
+                continue;
+            }
             nodes.Add(position, node);
         }
 
@@ -108,7 +113,7 @@ public class Pathfinding
     private bool IsWalkable(Vector3Int position)
     {
         TileBase tile = tilemap.GetTile(position);
-        return tile == pb.tiles["empty"] || pb.tiles["urinium"];
+        return tile == pb.tiles["empty"] || tile == pb.tiles["urinium"];
     }
 
     private Node GetNodeWithLowestCost(HashSet<Node> nodeSet)
