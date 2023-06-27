@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -107,11 +109,45 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToClear, "empty");
         TempTilemap.SetTilesBlock(prevArea, tilesToClear);
     }
-    public void ClearArea(BoundsInt prevArea)
+    public void ClearAreaUnderUnit(BoundsInt prevArea)
     {
-        TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
-        FillTiles(tilesToClear, "empty");
-        BuildingsTilemap.SetTilesBlock(prevArea, tilesToClear);
+        List<TileBase> tilesToClear = new List<TileBase>();
+        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(prevArea);
+        // only replace tiles that were "under_unit"
+        for (int i = 0; i < buildingsArrayOfTiles.Length; i++)
+        {
+            if (buildingsArrayOfTiles[i] == tiles["under_unit"])
+            {
+                tilesToClear.Add(tiles["empty"]);
+            }
+            else
+            {
+                tilesToClear.Add(buildingsArrayOfTiles[i]);
+            }
+        }
+
+        BuildingsTilemap.SetTilesBlock(prevArea, tilesToClear.ToArray());
+    }
+
+    public void TakeAreaUnderUnit(BoundsInt area)
+    {
+        List<TileBase> tilesToTake = new List<TileBase>();
+        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
+        // only replace tiles that were "empty"
+        for (int i = 0; i < buildingsArrayOfTiles.Length; i++)
+        {
+            if (buildingsArrayOfTiles[i] == tiles["empty"])
+            {
+                tilesToTake.Add(tiles["under_unit"]);
+            }
+            else
+            {
+                tilesToTake.Add(buildingsArrayOfTiles[i]);
+            }
+        }
+        
+        BuildingsTilemap.SetTilesBlock(area, tilesToTake.ToArray());
+        
     }
 
     private static void FillTiles(TileBase[] arr, string type)

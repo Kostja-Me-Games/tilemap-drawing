@@ -9664,7 +9664,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2056593257092241388, guid: 6de626dba482140159a1d57812d9717d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6de626dba482140159a1d57812d9717d, type: 3}
@@ -12836,6 +12836,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Harvester (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4914170334906486205, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4914170336390022981, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -13823,7 +13827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2056593257092241388, guid: 6de626dba482140159a1d57812d9717d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6de626dba482140159a1d57812d9717d, type: 3}
@@ -14088,7 +14092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2056593257092241388, guid: 6de626dba482140159a1d57812d9717d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6de626dba482140159a1d57812d9717d, type: 3}

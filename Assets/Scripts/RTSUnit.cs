@@ -109,11 +109,11 @@ public class RTSUnit : MonoBehaviour
 
 
     public void UpdateTakenArea(bool initial = false) {
-        pb.ClearArea(area);
+        pb.ClearAreaUnderUnit(area);
         BoundsInt newArea = pb.GetAreaByPosition(
             pb.GetTileCenterPosition(transform.position),
             area);
-        pb.TakeAreaTile(newArea, "under_unit");
+        pb.TakeAreaUnderUnit(newArea);
         area = newArea;
     }
     private void MoveAlongPath()

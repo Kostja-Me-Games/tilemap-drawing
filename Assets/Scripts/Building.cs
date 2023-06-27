@@ -5,32 +5,31 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    
     public bool Placed { get; private set; }
     ConstructionPropertiesController constructionPropertiesController;
     public BoundsInt area;
     private SpriteRenderer spriteRenderer;
-	public Animator animator;
+    public Animator animator;
     private Camera _camera;
-
+    
     private void OnMouseDown()
     {
         if (!Placed)
         {
-            
         }
     }
 
     private void OnMouseDrag()
     {
-        
     }
+
     private void OnMouseUp()
     {
         if (!Placed)
         {
-    		Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
-            transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
+            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+            transform.localPosition =
+                paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
         }
     }
 
@@ -46,19 +45,21 @@ public class Building : MonoBehaviour
         if (!Placed)
         {
             bool result = constructionPropertiesController.Build();
-            if (result) 
+            if (result)
             {
                 Placed = true;
                 ChangeOpacity(1f);
                 paintbrush.current.TakeArea(area);
                 // get animator and set the "Placed" trigger
-                if (animator != null) {
+                if (animator != null)
+                {
                     animator.SetBool("Placed", true);
                 }
+
             }
-		    
         }
     }
+
     private void ChangeOpacity(float opacity)
     {
         // Get the current color of the sprite
@@ -76,7 +77,7 @@ public class Building : MonoBehaviour
     {
         _camera = Camera.main;
         constructionPropertiesController = GetComponent<ConstructionPropertiesController>();
-		// try / catch to avoid errors if the animator or sprite renderer are not found
+        // try / catch to avoid errors if the animator or sprite renderer are not found
         try
         {
             animator = transform.Find("Sprite").GetComponent<Animator>();
@@ -85,7 +86,7 @@ public class Building : MonoBehaviour
         {
             Debug.Log("No animator found for building " + gameObject.name);
         }
-		
+
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
         ChangeOpacity(0.5f);
     }
@@ -95,11 +96,11 @@ public class Building : MonoBehaviour
     {
         if (!Placed)
         {
-			
             Vector3 mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-			Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
-            transform.localPosition = paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
+            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+            transform.localPosition =
+                paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
             paintbrush.current.FollowBuilding();
         }
     }
