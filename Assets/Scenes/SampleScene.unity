@@ -13325,7 +13325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13366,6 +13366,10 @@ PrefabInstance:
     - target: {fileID: 6970674376076181866, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
       propertyPath: m_Name
       value: Urinium Crystal (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970674376076181866, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
@@ -13419,6 +13423,10 @@ PrefabInstance:
     - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 986033187688594993, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: urinium
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6970674376076181866, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
       propertyPath: m_Name

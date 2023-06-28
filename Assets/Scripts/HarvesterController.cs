@@ -102,7 +102,15 @@ public class HarvesterController : MonoBehaviour
         if (currentTargetResourceTile == Vector3Int.zero)
         {
             // looks like there is no applicable resource tile, set state to idle
-            harvesterState = HarvesterState.Idle;
+            if (resourceCount > 0)
+            {
+                SetStateMovingToBase();
+            }
+            else
+            {
+                SetStateIdle();
+            }
+
             return;
         }
 
@@ -138,12 +146,16 @@ public class HarvesterController : MonoBehaviour
 
         if (uriniumCrystalScript == null)
         {
-            uriniumCrystalScript = pb.GetResourceAtTile(currentTargetResourceTile);
+            // Harvester has the right to harvest only if it is located at the same time, so we get position by the current position of harvester.
+            Vector3Int tileCenterPosition = pb.WorldToCell(transform.position);
+            uriniumCrystalScript = pb.GetResourceAtTile(tileCenterPosition);
         }
 
         if (!uriniumCrystalScript)
         {
+            currentTargetResourceTile = Vector3Int.zero;
             harvesterState = HarvesterState.MovingToResource;
+            return;
         }
 
         float spaceLeft = maxResourceCount - resourceCount;
@@ -202,12 +214,15 @@ public class HarvesterController : MonoBehaviour
             double unloadAmount =
                 Math.Floor(Mathf.Min(resourceCountUnloadingPerSecond * Time.deltaTime, resourceCount));
             creditsController.AddCredits(unloadAmount);
-            resourceCount -= (float) unloadAmount;
+            resourceCount -= (float)unloadAmount;
         }
 
         if (resourceCount < 1)
         {
             resourceCount = 0;
+            // move harvester one tile down
+            Vector3Int tileCenterPosition = pb.WorldToCell(transform.position);
+            rtsUnit.MoveTo(pb.GetTileCenterPosition(tileCenterPosition) + new Vector3(0, -1, 0));
             SetStateMovingToResource();
         }
     }

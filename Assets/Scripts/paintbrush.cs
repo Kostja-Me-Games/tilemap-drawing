@@ -114,7 +114,7 @@ public class paintbrush : MonoBehaviour
     {
         TileBase[] tilesToClear = new TileBase[area.size.x * area.size.y * area.size.z];
         FillTiles(tilesToClear, "empty");
-        TempTilemap.SetTilesBlock(prevArea, tilesToClear);
+        BuildingsTilemap.SetTilesBlock(area, tilesToClear);
     }
 
     public void ClearAreaUnderUnit(BoundsInt prevArea)

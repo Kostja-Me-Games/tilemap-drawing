@@ -42,7 +42,6 @@ public class RTSUnit : MonoBehaviour
 
 
     public void MoveTo(Vector3 endPos) {
-        Debug.Log("Moving to " + endPos);
         // get current position on tilemap
         startMapPosition = pb.WorldToCell(transform.position);
         destinationMapPosition = pb.WorldToCell(endPos);
