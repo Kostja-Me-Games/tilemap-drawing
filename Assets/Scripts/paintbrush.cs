@@ -109,6 +109,14 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToClear, "empty");
         TempTilemap.SetTilesBlock(prevArea, tilesToClear);
     }
+
+    public void ClearAreaUnderUrinium(BoundsInt area)
+    {
+        TileBase[] tilesToClear = new TileBase[area.size.x * area.size.y * area.size.z];
+        FillTiles(tilesToClear, "empty");
+        TempTilemap.SetTilesBlock(prevArea, tilesToClear);
+    }
+
     public void ClearAreaUnderUnit(BoundsInt prevArea)
     {
         List<TileBase> tilesToClear = new List<TileBase>();
@@ -188,7 +196,20 @@ public class paintbrush : MonoBehaviour
         FillTiles(tilesToTake, tile);
         BuildingsTilemap.SetTilesBlock(area, tilesToTake);
     }
-
+    public UriniumCrystalScript GetResourceAtTile(Vector3Int tilePosition)
+    {   
+        // find a Urinium Crystal at the tile position
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(tilePosition.x, tilePosition.y), 0.2f);
+        foreach (Collider2D collider in colliders)
+        {
+            UriniumCrystalScript uriniumCrystal = collider.GetComponent<UriniumCrystalScript>();
+            if (uriniumCrystal != null)
+            {
+                return uriniumCrystal;
+            }
+        }
+        return null;
+    }
     private void Awake()
     {
         current = this;

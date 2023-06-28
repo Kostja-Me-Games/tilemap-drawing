@@ -41,6 +41,7 @@ public class RefineryController : MonoBehaviour
             Vector3 harvesterMovePoint = new Vector3(position.x, position.y - 1, 0);
             harvester.GetComponent<RTSUnit>().MoveTo(harvesterMovePoint);
             harvesterSent = true;
+            harvester.GetComponent<HarvesterController>().SetStateMovingToResource();
         }
     }
 

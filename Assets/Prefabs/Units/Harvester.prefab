@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4914170334906486204}
   - component: {fileID: 5591671253376220453}
   - component: {fileID: 8209938962330956246}
+  - component: {fileID: 2905782840118034110}
   m_Layer: 0
   m_Name: Harvester
   m_TagString: Untagged
@@ -73,6 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848963ffd80604d848840b5f9f13f435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 3
   startPosition: {x: 0, y: 0, z: 0}
   endPosition: {x: 0, y: 0, z: 0}
   spriteTransform: {fileID: 0}
@@ -80,6 +82,28 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 1, y: 1, z: 1}
   pb: {fileID: 0}
+  isMoving: 0
+  path: []
+  startMapPosition: {x: 0, y: 0, z: 0}
+  destinationMapPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &2905782840118034110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4914170334906486205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50dd6e8959ca549cfbd676b54829d375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pb: {fileID: 0}
+  harvesterState: 0
+  currentTargetResourceTile: {x: 0, y: 0, z: 0}
+  resourceCount: 0
+  maxResourceCount: 1500
+  uriniumCrystalScript: {fileID: 0}
 --- !u!1 &4914170336390022983
 GameObject:
   m_ObjectHideFlags: 0

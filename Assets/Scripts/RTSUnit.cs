@@ -5,7 +5,7 @@ using UnityEngine;
 public class RTSUnit : MonoBehaviour
 {
     private GameObject selectedGameObject;
-    public float movementSpeed = 5f;
+    public float movementSpeed = 1f;
     public Vector3 startPosition;
     public Vector3 endPosition;
     public Transform spriteTransform;
@@ -13,7 +13,7 @@ public class RTSUnit : MonoBehaviour
     public paintbrush pb;
     private Pathfinding pathfinding;
     private int currentPathIndex = 0;
-    private bool isMoving = false;
+    public bool isMoving = false;
     [SerializeField] private List<Vector3Int> path;
     [SerializeField] private Vector3Int startMapPosition;
     [SerializeField] private Vector3Int destinationMapPosition;
@@ -116,6 +116,9 @@ public class RTSUnit : MonoBehaviour
         pb.TakeAreaUnderUnit(newArea);
         area = newArea;
     }
+
+
+
     private void MoveAlongPath()
     {
         if (path == null || path.Count == 0 || path.Count <= currentPathIndex)
