@@ -9,9 +9,9 @@ public class CreditsController : MonoBehaviour
     // singleton pattern
     public static CreditsController instance;
 
-    public int credits;
+    public double credits;
     public TextMeshProUGUI textMesh;
-    public void AddCredits(int amount)
+    public void AddCredits(double amount)
     {
         // check that amount is positive
         if (amount < 0)
@@ -22,7 +22,7 @@ public class CreditsController : MonoBehaviour
         credits += amount;
     }
 
-    public bool SubtractCredits(int amount)
+    public bool SubtractCredits(double amount)
     {
         // check that amount is positive
         if (amount < 0)
@@ -39,7 +39,7 @@ public class CreditsController : MonoBehaviour
         return true;
     }
 
-    public bool CheckEnoughCredits(int amount)
+    public bool CheckEnoughCredits(double amount)
     {
         return credits < amount;
     }

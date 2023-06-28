@@ -7,7 +7,10 @@ using UnityEngine.Tilemaps;
 public class HarvesterController : MonoBehaviour
 {
     public paintbrush pb;
+    public CreditsController creditsController;
+
     [SerializeField] private SpriteRenderer spriteRenderer;
+
     // harvesterState enum with list of states
     public enum HarvesterState
     {
@@ -26,14 +29,19 @@ public class HarvesterController : MonoBehaviour
 
     [SerializeField] private Int32 maxResourceCount = 1500;
     Int32 resourceCountPerSecond = 300;
+    Int32 resourceCountUnloadingPerSecond = 600;
     [SerializeField] private UriniumCrystalScript uriniumCrystalScript;
     [SerializeField] private RefineryController refineryController;
+
     [SerializeField] private float distanceToRefinery = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Specific unit controller started: Harvester");
         pb = GameObject.Find("Grid").GetComponent<paintbrush>();
-        rtsUnit = GetComponent<RTSUnit>();
+        creditsController = GameObject.Find("Credits").GetComponent<CreditsController>();
+        rtsUnit = transform.GetComponent<RTSUnit>();
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
     }
 
@@ -56,6 +64,7 @@ public class HarvesterController : MonoBehaviour
         {
             WhileIdle();
         }
+
         if (harvesterState == HarvesterState.MovingToResource)
         {
             WhileMovingToResource();
@@ -65,7 +74,12 @@ public class HarvesterController : MonoBehaviour
         {
             WhileHarvesting();
         }
-        
+
+        if (harvesterState == HarvesterState.Unloading)
+        {
+            WhileUnloading();
+        }
+
         if (harvesterState == HarvesterState.MovingToBase)
         {
             WhileMovingToBase();
@@ -91,7 +105,7 @@ public class HarvesterController : MonoBehaviour
             harvesterState = HarvesterState.Idle;
             return;
         }
-        
+
         // if the harvester is not at the current target resource tile, not moving, 
         if (rtsUnit.isMoving == false && pb.WorldToCell(transform.position) != currentTargetResourceTile)
         {
@@ -121,6 +135,7 @@ public class HarvesterController : MonoBehaviour
             uriniumCrystalScript = null;
             return;
         }
+
         if (uriniumCrystalScript == null)
         {
             uriniumCrystalScript = pb.GetResourceAtTile(currentTargetResourceTile);
@@ -130,10 +145,11 @@ public class HarvesterController : MonoBehaviour
         {
             harvesterState = HarvesterState.MovingToResource;
         }
+
         float spaceLeft = maxResourceCount - resourceCount;
         // harvestAmount can't be greater than the resourceCountPerSecond or spaceLeft
         float harvestAmount = Mathf.Min(resourceCountPerSecond * Time.deltaTime, spaceLeft);
-        
+
         resourceCount += uriniumCrystalScript.Harvest(harvestAmount);
     }
 
@@ -144,40 +160,56 @@ public class HarvesterController : MonoBehaviour
         {
             refineryController = FindNearestRefinery();
         }
+
         if (!refineryController)
         {
             harvesterState = HarvesterState.Idle;
             return;
         }
+
         distanceToRefinery =
-            Physics2D.Distance(refineryController.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>()).distance;
-        
+            Physics2D.Distance(refineryController.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>())
+                .distance;
+
         if (distanceToRefinery < 0.2f)
         {
             rtsUnit.ClearMovement();
-            transform.position = pb.GetTileCenterPosition(refineryController.transform.position ) + new Vector3(1.6f, -0.15f, 0);
+            transform.position = pb.GetTileCenterPosition(refineryController.transform.position) +
+                                 new Vector3(1.6f, -0.15f, 0);
             spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, -90);
-            
+
             harvesterState = HarvesterState.Unloading;
             return;
         }
+
         if (rtsUnit.isMoving == false && pb.WorldToCell(transform.position) != refineryController.transform.position)
         {
             Vector3 tileCenterPosition = pb.GetTileCenterPosition(refineryController.transform.position);
             tileCenterPosition.y -= 1;
             tileCenterPosition.x += 2;
-            
+
             rtsUnit.MoveTo(tileCenterPosition);
         }
-        
+
         // check if the harvester is near the refinery (the distance to refinery is 1) then move to state UNLOADING
-        
-        
     }
 
     private void WhileUnloading()
     {
         // unload the resource tile: reduce the harvester's resource count by 1, increase the refinery's resource count by 1, until empty then switch to state MOVING_TO_RESOURCE
+        if (resourceCount > 0)
+        {
+            double unloadAmount =
+                Math.Floor(Mathf.Min(resourceCountUnloadingPerSecond * Time.deltaTime, resourceCount));
+            creditsController.AddCredits(unloadAmount);
+            resourceCount -= (float) unloadAmount;
+        }
+
+        if (resourceCount < 1)
+        {
+            resourceCount = 0;
+            SetStateMovingToResource();
+        }
     }
 
     public void SetStateIdle()
@@ -231,8 +263,8 @@ public class HarvesterController : MonoBehaviour
 
         return nearestTile;
     }
-    
-    
+
+
     // find all Refinery objects and find the nearest one
     public RefineryController FindNearestRefinery()
     {
@@ -247,8 +279,7 @@ public class HarvesterController : MonoBehaviour
                 nearestRefinery = refinery;
             }
         }
-        
+
         return nearestRefinery;
-        
     }
 }
