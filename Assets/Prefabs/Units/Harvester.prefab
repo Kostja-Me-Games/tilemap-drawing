@@ -104,6 +104,8 @@ MonoBehaviour:
   resourceCount: 0
   maxResourceCount: 1500
   uriniumCrystalScript: {fileID: 0}
+  refineryController: {fileID: 0}
+  distanceToRefinery: 0
 --- !u!1 &4914170336390022983
 GameObject:
   m_ObjectHideFlags: 0

@@ -136,7 +136,6 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 2, z: 1}
   animator: {fileID: 0}
-  specificBuildingScript: {fileID: 1064585803841107432}
 --- !u!61 &1980170664087508633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -150,7 +149,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -189,6 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9473424b34aa4d6a8cddbcf7b289f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  building: {fileID: 0}
   harvesterPrefab: {fileID: 4914170334906486205, guid: ea5fba42de8604fb588aee0c0213a8d7, type: 3}
+  harvester: {fileID: 0}
   harvesterSpawnPoint: {x: 0, y: 0, z: 0}
   harvesterSpawned: 0
+  harvesterSent: 0

@@ -53,6 +53,11 @@ public class RTSUnit : MonoBehaviour
         }
 
     }
+    public void ClearMovement() {
+        isMoving = false;
+        path = null;
+        currentPathIndex = 0;
+    }
     public void _MoveTo(Vector3 endPos) {
         endPosition = endPos;
         startPosition = transform.position;
