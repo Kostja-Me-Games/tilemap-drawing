@@ -12,6 +12,18 @@ public class RefineryController : MonoBehaviour
     public Vector3Int harvesterSpawnPoint;
     public bool harvesterSpawned = false;
     public bool harvesterSent = false;
+
+
+    public void SetUnloadingHarvester(HarvesterController harvesterController)
+    {
+        harvester = harvesterController.gameObject;
+    }
+
+    public void ClearUnloadingHarvester()
+    {
+        harvester = null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +32,7 @@ public class RefineryController : MonoBehaviour
         
         
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -40,6 +52,7 @@ public class RefineryController : MonoBehaviour
             harvester.GetComponent<RTSUnit>().MoveTo(harvesterMovePoint);
             harvesterSent = true;
             harvester.GetComponent<HarvesterController>().SetStateMovingToResource();
+            harvester = null;
         }
     }
 

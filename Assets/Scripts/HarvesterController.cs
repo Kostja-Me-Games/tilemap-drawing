@@ -190,13 +190,20 @@ public class HarvesterController : MonoBehaviour
 
         if (distanceToRefinery < 0.2f)
         {
-            rtsUnit.ClearMovement();
-            transform.position = pb.GetTileCenterPosition(refineryController.transform.position) +
-                                 new Vector3(1.6f, -0.15f, 0);
-            spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, -90);
-
-            harvesterState = HarvesterState.Unloading;
-            return;
+            if (refineryController.harvester == null)
+            {
+                rtsUnit.ClearMovement();
+                transform.position = pb.GetTileCenterPosition(refineryController.transform.position) +
+                                     new Vector3(1.6f, -0.15f, 0);
+                spriteRenderer.transform.rotation = Quaternion.Euler(0, 0, -90);
+                refineryController.SetUnloadingHarvester(this);
+                harvesterState = HarvesterState.Unloading;
+                return;
+            }
+            else
+            {
+                refineryController = null;
+            }
         }
 
         if (rtsUnit.isMoving == false && pb.WorldToCell(transform.position) != refineryController.transform.position)
@@ -229,6 +236,7 @@ public class HarvesterController : MonoBehaviour
                 // do nothing, wait when spot becomes available
                 return;
             }
+            refineryController.ClearUnloadingHarvester();
             Vector3 exactPosition = pb.GetTileCenterPosition(walkablePositionNearRefinery);
             transform.position = exactPosition;
             SetStateMovingToResource();
@@ -312,6 +320,11 @@ public class HarvesterController : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         foreach (RefineryController refinery in FindObjectsOfType<RefineryController>())
         {
+            if (refinery.harvester != null)
+            {
+                continue;
+            }
+
             float distance = Vector3.Distance(transform.position, refinery.transform.position);
             if (distance < shortestDistance)
             {
