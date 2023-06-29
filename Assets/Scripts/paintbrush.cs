@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 
-public class paintbrush : MonoBehaviour
+public class Paintbrush : MonoBehaviour
 {
     // singleton
-    public static paintbrush current;
+    public static Paintbrush current;
     
     public GridLayout gridLayout; //Grid Object
-    public Tilemap MainTilemap; //Main tilemap
+    public Tilemap GroundTailmap; //Main tilemap
     public Tilemap TempTilemap; //Temp tilemap
     public Tilemap BuildingsTilemap; //Buildings tilemap used to track buildings boundaries
+    public Tilemap UnitsTilemap; //Units tilemap used to track units boundaries
     public Tile tile;
     // array of Tile objects with string key
     [SerializeField] public Dictionary<string, Tile> tiles = new Dictionary<string, Tile>();
@@ -52,7 +54,7 @@ public class paintbrush : MonoBehaviour
         // Get a cell 
         building.area.position = gridLayout.WorldToCell(building.transform.position);
         // get tiles block from MainTilemap
-        TileBase[] groundTilesInBuildingArea = MainTilemap.GetTilesBlock(building.area);
+        TileBase[] groundTilesInBuildingArea = GroundTailmap.GetTilesBlock(building.area);
         TileBase[] buildingTilesInBuildingArea = BuildingsTilemap.GetTilesBlock(building.area);
         int sizeOfGroundTiles = groundTilesInBuildingArea.Length;
         BoundsInt buildingArea = building.area;
@@ -79,7 +81,7 @@ public class paintbrush : MonoBehaviour
 
     public bool AreaCanBeTaken(BoundsInt area)
     {
-        TileBase[] groundArrayOfTiles = MainTilemap.GetTilesBlock(area);
+        TileBase[] groundArrayOfTiles = GroundTailmap.GetTilesBlock(area);
         TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
         for (int i = 0; i < groundArrayOfTiles.Length; i++)
         {
@@ -92,7 +94,7 @@ public class paintbrush : MonoBehaviour
     }
     public bool AreaCanBeTravelled(BoundsInt area)
     {
-        TileBase[] groundArrayOfTiles = MainTilemap.GetTilesBlock(area);
+        TileBase[] groundArrayOfTiles = GroundTailmap.GetTilesBlock(area);
         TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
         for (int i = 0; i < groundArrayOfTiles.Length; i++)
         {
@@ -120,41 +122,41 @@ public class paintbrush : MonoBehaviour
     public void ClearAreaUnderUnit(BoundsInt prevArea)
     {
         List<TileBase> tilesToClear = new List<TileBase>();
-        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(prevArea);
+        TileBase[] unitsArrayOfTiles = UnitsTilemap.GetTilesBlock(prevArea);
         // only replace tiles that were "under_unit"
-        for (int i = 0; i < buildingsArrayOfTiles.Length; i++)
+        for (int i = 0; i < unitsArrayOfTiles.Length; i++)
         {
-            if (buildingsArrayOfTiles[i] == tiles["under_unit"])
+            if (unitsArrayOfTiles[i] == tiles["under_unit"])
             {
                 tilesToClear.Add(tiles["empty"]);
             }
             else
             {
-                tilesToClear.Add(buildingsArrayOfTiles[i]);
+                tilesToClear.Add(unitsArrayOfTiles[i]);
             }
         }
 
-        BuildingsTilemap.SetTilesBlock(prevArea, tilesToClear.ToArray());
+        UnitsTilemap.SetTilesBlock(prevArea, tilesToClear.ToArray());
     }
 
     public void TakeAreaUnderUnit(BoundsInt area)
     {
         List<TileBase> tilesToTake = new List<TileBase>();
-        TileBase[] buildingsArrayOfTiles = BuildingsTilemap.GetTilesBlock(area);
+        TileBase[] unitsArrayOfTiles = UnitsTilemap.GetTilesBlock(area);
         // only replace tiles that were "empty"
-        for (int i = 0; i < buildingsArrayOfTiles.Length; i++)
+        for (int i = 0; i < unitsArrayOfTiles.Length; i++)
         {
-            if (buildingsArrayOfTiles[i] == tiles["empty"])
+            if (unitsArrayOfTiles[i] == tiles["empty"])
             {
                 tilesToTake.Add(tiles["under_unit"]);
             }
             else
             {
-                tilesToTake.Add(buildingsArrayOfTiles[i]);
+                tilesToTake.Add(unitsArrayOfTiles[i]);
             }
         }
         
-        BuildingsTilemap.SetTilesBlock(area, tilesToTake.ToArray());
+        UnitsTilemap.SetTilesBlock(area, tilesToTake.ToArray());
         
     }
 
