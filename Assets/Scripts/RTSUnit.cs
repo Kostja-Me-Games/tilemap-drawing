@@ -113,11 +113,21 @@ public class RTSUnit : MonoBehaviour
 
 
     public void UpdateTakenArea(bool initial = false) {
-        pb.ClearAreaUnderUnit(area);
         BoundsInt newArea = pb.GetAreaByPosition(
             pb.GetTileCenterPosition(transform.position),
             area);
-        pb.TakeAreaUnderUnit(newArea);
+        Debug.Log("new area: " + newArea + " old area: " + area + " Same: " + (area == newArea).ToString());//+ newArea.Equals(area));
+        if (area != newArea)
+        {
+            Debug.Log("Redrawing");
+            pb.TakeAreaUnderUnit(newArea);
+            pb.ClearAreaUnderUnit(area);
+        }
+        else
+        {
+            Debug.Log("Not redrawing, they are the same");
+        }
+
         area = newArea;
     }
 
@@ -135,7 +145,7 @@ public class RTSUnit : MonoBehaviour
         // Move towards the next waypoint in the path
         Vector3 targetPosition = pb.GetTileCenterPosition(path[currentPathIndex]);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-        TurnToTargetPosition(targetPosition);
+        
         // Check if the unit has reached the current waypoint
         if (transform.position == targetPosition)
         {
@@ -164,6 +174,11 @@ public class RTSUnit : MonoBehaviour
                 // Reached the end of the path
                 isMoving = false;
             }
+        }
+
+        if (isMoving)
+        {
+            TurnToTargetPosition(targetPosition);
         }
     }
     void Update()
