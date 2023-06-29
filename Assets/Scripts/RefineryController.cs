@@ -15,7 +15,6 @@ public class RefineryController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Specific building controller started: Refinery");
         building = GetComponent<Building>();
         harvesterSpawnPoint = new Vector3Int(2, 0, 0);
         
@@ -27,7 +26,6 @@ public class RefineryController : MonoBehaviour
     {
         if (building.Placed && !harvesterSpawned)
         {
-            Debug.Log("Spawning harvester");
             harvesterSpawned = true;
             SpawnHarvester();
         }

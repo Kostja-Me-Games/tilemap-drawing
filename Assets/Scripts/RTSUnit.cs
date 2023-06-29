@@ -139,6 +139,22 @@ public class RTSUnit : MonoBehaviour
         // Check if the unit has reached the current waypoint
         if (transform.position == targetPosition)
         {
+            // Check if there are more waypoints left to go to
+            if (currentPathIndex < path.Count - 1)
+            {
+                // check if the next waypoint is walkable
+                Vector3Int nextTilePosition = path[currentPathIndex + 1];
+                BoundsInt nextArea = new BoundsInt(nextTilePosition.x, nextTilePosition.y, 0, 1, 1, 1);
+                bool canMoveToNextArea = pb.IsWalkable(nextArea.position);
+                if (!canMoveToNextArea)
+                {
+                    // if the tile is not empty, stop moving
+                    isMoving = false;
+                    endPosition = transform.position;
+                    return;
+                }
+            }
+
             // Move to the next waypoint
             currentPathIndex++;
 

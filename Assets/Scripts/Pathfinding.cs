@@ -110,18 +110,7 @@ public class Pathfinding
 
     private bool IsWalkable(Vector3Int position)
     {
-        TileBase unitTile = pb.UnitsTilemap.GetTile(position);
-        TileBase groundTile = pb.GroundTailmap.GetTile(position);
-        TileBase buildingTile = pb.BuildingsTilemap.GetTile(position);
-        bool unitTileIsWalkable = unitTile == pb.tiles["empty"];
-        bool groundTileIsWalkable = groundTile == pb.tiles["grass"];
-        bool buildingTileIsWalkable = buildingTile == pb.tiles["empty"] || buildingTile == pb.tiles["urinium"];
-        if (unitTileIsWalkable && groundTileIsWalkable && buildingTileIsWalkable)
-        {
-            return true;
-        }
-
-        return false;
+        return pb.IsWalkable(position);
     }
 
     private Node GetNodeWithLowestCost(HashSet<Node> nodeSet)

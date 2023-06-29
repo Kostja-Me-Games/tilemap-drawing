@@ -265,7 +265,7 @@ public class HarvesterController : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         foreach (Vector3Int tilePosition in tilemap.cellBounds.allPositionsWithin)
         {
-            if (tilemap.HasTile(tilePosition) && tilemap.GetTile(tilePosition) == pb.tiles["urinium"])
+            if (tilemap.HasTile(tilePosition) && tilemap.GetTile(tilePosition) == pb.tiles["urinium"] && pb.IsWalkable(tilePosition))
             {
                 float distance = Vector3Int.Distance(harvesterPosition, tilePosition);
                 if (distance < shortestDistance)
