@@ -201,11 +201,9 @@ public class HarvesterController : MonoBehaviour
 
         if (rtsUnit.isMoving == false && pb.WorldToCell(transform.position) != refineryController.transform.position)
         {
-            Vector3 tileCenterPosition = pb.GetTileCenterPosition(refineryController.transform.position);
-            tileCenterPosition.y -= 1;
-            tileCenterPosition.x += 2;
-
-            rtsUnit.MoveTo(tileCenterPosition);
+            Vector3Int walkablePositionNearRefinery = FindWalkablePositionAroundRefinery(refineryController);
+            
+            rtsUnit.MoveTo(walkablePositionNearRefinery);
         }
 
         // check if the harvester is near the refinery (the distance to refinery is 1) then move to state UNLOADING
@@ -225,9 +223,14 @@ public class HarvesterController : MonoBehaviour
         if (resourceCount < 1)
         {
             resourceCount = 0;
-            // move harvester one tile down
-            Vector3Int tileCenterPosition = pb.WorldToCell(transform.position);
-            rtsUnit.MoveTo(pb.GetTileCenterPosition(tileCenterPosition) + new Vector3(0, -1, 0));
+            Vector3Int walkablePositionNearRefinery = FindWalkablePositionAroundRefinery(refineryController);
+            if (walkablePositionNearRefinery == Vector3Int.zero)
+            {
+                // do nothing, wait when spot becomes available
+                return;
+            }
+            Vector3 exactPosition = pb.GetTileCenterPosition(walkablePositionNearRefinery);
+            transform.position = exactPosition;
             SetStateMovingToResource();
         }
     }
@@ -257,6 +260,23 @@ public class HarvesterController : MonoBehaviour
         harvesterState = HarvesterState.Unloading;
     }
 
+    public Vector3Int FindWalkablePositionAroundRefinery(RefineryController targetRefineryController)
+    {
+        // get the position of refinery and the area from RefineryController, cycle through neighbor tiles and find which is walkable
+        BoundsInt refineryArea = targetRefineryController.building.area;
+        refineryArea.x -= 1;
+        refineryArea.y -= 1;
+        Vector3Int walkablePosition = Vector3Int.zero;
+        foreach (Vector3Int tilePosition in refineryArea.allPositionsWithin)
+        {
+            if (pb.IsWalkable(tilePosition))
+            {
+                walkablePosition = tilePosition;
+                break;
+            }
+        }
+        return walkablePosition;
+    }
 
     // find the nearest tile in BuildingTilemap that has type "urinium"
     public Vector3Int FindNearestResource()
