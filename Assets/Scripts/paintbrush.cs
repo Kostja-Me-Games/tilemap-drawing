@@ -105,6 +105,23 @@ public class Paintbrush : MonoBehaviour
         }
         return true;
     }
+    
+    public bool IsWalkable(Vector3Int position)
+    {
+        TileBase unitTile = UnitsTilemap.GetTile(position);
+        TileBase groundTile = GroundTailmap.GetTile(position);
+        TileBase buildingTile = BuildingsTilemap.GetTile(position);
+        bool unitTileIsWalkable = unitTile == tiles["empty"];
+        bool groundTileIsWalkable = groundTile == tiles["grass"];
+        bool buildingTileIsWalkable = buildingTile == tiles["empty"] || buildingTile == tiles["urinium"];
+        if (unitTileIsWalkable && groundTileIsWalkable && buildingTileIsWalkable)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    
     private void ClearArea()
     {
         TileBase[] tilesToClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
