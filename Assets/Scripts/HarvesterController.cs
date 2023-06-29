@@ -99,6 +99,11 @@ public class HarvesterController : MonoBehaviour
             currentTargetResourceTile = FindNearestResource();
         }
 
+        if (currentTargetResourceTile != Vector3Int.zero && pb.WorldToCell(transform.position) != currentTargetResourceTile && !pb.IsWalkable(currentTargetResourceTile))
+        {
+            currentTargetResourceTile = FindNearestResource();
+        }
+
         if (currentTargetResourceTile == Vector3Int.zero)
         {
             // looks like there is no applicable resource tile, set state to idle
@@ -108,7 +113,7 @@ public class HarvesterController : MonoBehaviour
             }
             else
             {
-                SetStateIdle();
+                // do nothing, in case if a resource tile becomes available again
             }
 
             return;
