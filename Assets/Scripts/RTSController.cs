@@ -7,7 +7,7 @@ public class RTSController : MonoBehaviour
     public Vector3 startPosition;
     [SerializeField] private List<RTSUnit> selectedRTSUnitList;
     [SerializeField] private Transform selectionAreaTransform;
-    public paintbrush pb;
+    public Paintbrush pb;
 
     private void Awake()
     {
@@ -84,7 +84,7 @@ public class RTSController : MonoBehaviour
 
     void Start()
     {
-        pb = GameObject.Find("Grid").GetComponent<paintbrush>();
+        pb = GameObject.Find("Grid").GetComponent<Paintbrush>();
     }
 
     // Update is called once per frame

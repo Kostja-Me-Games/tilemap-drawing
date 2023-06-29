@@ -5,14 +5,12 @@ using UnityEngine.UIElements;
 
 public class Pathfinding
 {
-    private Tilemap tilemap;
     [SerializeField] private Dictionary<Vector3Int, Node> nodes;
-    private paintbrush pb;
-    public Pathfinding(Tilemap tilemap)
+    private Paintbrush pb;
+    public Pathfinding()
     {
-        this.tilemap = tilemap;
         nodes = new Dictionary<Vector3Int, Node>();
-        pb = GameObject.Find("Grid").GetComponent<paintbrush>();
+        pb = GameObject.Find("Grid").GetComponent<Paintbrush>();
 
     }
 
@@ -86,7 +84,7 @@ public class Pathfinding
         nodes.Clear();
         Node startingNode = new Node(startPosition);
         nodes.Add(startPosition, startingNode);
-        foreach (Vector3Int position in tilemap.cellBounds.allPositionsWithin)
+        foreach (Vector3Int position in pb.UnitsTilemap.cellBounds.allPositionsWithin)
         {
             if (!IsWalkable(position))
             {
@@ -112,8 +110,18 @@ public class Pathfinding
 
     private bool IsWalkable(Vector3Int position)
     {
-        TileBase tile = tilemap.GetTile(position);
-        return tile == pb.tiles["empty"] || tile == pb.tiles["urinium"];
+        TileBase unitTile = pb.UnitsTilemap.GetTile(position);
+        TileBase groundTile = pb.GroundTailmap.GetTile(position);
+        TileBase buildingTile = pb.BuildingsTilemap.GetTile(position);
+        bool unitTileIsWalkable = unitTile == pb.tiles["empty"];
+        bool groundTileIsWalkable = groundTile == pb.tiles["grass"];
+        bool buildingTileIsWalkable = buildingTile == pb.tiles["empty"] || buildingTile == pb.tiles["urinium"];
+        if (unitTileIsWalkable && groundTileIsWalkable && buildingTileIsWalkable)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private Node GetNodeWithLowestCost(HashSet<Node> nodeSet)

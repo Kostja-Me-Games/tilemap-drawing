@@ -27,17 +27,17 @@ public class Building : MonoBehaviour
     {
         if (!Placed)
         {
-            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+            Vector3Int cellPosition = Paintbrush.current.gridLayout.LocalToCell(transform.position);
             transform.localPosition =
-                paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
+                Paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
         }
     }
 
     public bool CanBePlacedHere()
     {
         BoundsInt newArea = area;
-        newArea.position = paintbrush.current.gridLayout.LocalToCell(transform.position);
-        return paintbrush.current.AreaCanBeTaken(newArea);
+        newArea.position = Paintbrush.current.gridLayout.LocalToCell(transform.position);
+        return Paintbrush.current.AreaCanBeTaken(newArea);
     }
 
     public void Place()
@@ -49,7 +49,7 @@ public class Building : MonoBehaviour
             {
                 Placed = true;
                 ChangeOpacity(1f);
-                paintbrush.current.TakeArea(area);
+                Paintbrush.current.TakeArea(area);
                 // get animator and set the "Placed" trigger
                 if (animator != null)
                 {
@@ -98,10 +98,10 @@ public class Building : MonoBehaviour
         {
             Vector3 mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-            Vector3Int cellPosition = paintbrush.current.gridLayout.LocalToCell(transform.position);
+            Vector3Int cellPosition = Paintbrush.current.gridLayout.LocalToCell(transform.position);
             transform.localPosition =
-                paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
-            paintbrush.current.FollowBuilding();
+                Paintbrush.current.gridLayout.CellToLocalInterpolated(cellPosition + new Vector3(.5f, .5f, 0f));
+            Paintbrush.current.FollowBuilding();
         }
     }
 }

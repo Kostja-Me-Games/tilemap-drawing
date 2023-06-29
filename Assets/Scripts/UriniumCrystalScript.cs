@@ -6,14 +6,14 @@ using UnityEngine;
 public class UriniumCrystalScript : MonoBehaviour
 {
     public BoundsInt area;
-    public paintbrush pb;
+    public Paintbrush pb;
     public float urinium = 2000;
     // Start is called before the first frame update
     void Start()
     {
       // find game object called "Grid" and get the paintbrush component
 
-        pb = GameObject.Find("Grid").GetComponent<paintbrush>();   
+        pb = GameObject.Find("Grid").GetComponent<Paintbrush>();   
         BoundsInt newArea = pb.GetAreaByPosition(
             transform.position,
             area

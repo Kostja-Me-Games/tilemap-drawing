@@ -10,7 +10,7 @@ public class RTSUnit : MonoBehaviour
     public Vector3 endPosition;
     public Transform spriteTransform;
     public BoundsInt area;
-    public paintbrush pb;
+    public Paintbrush pb;
     private Pathfinding pathfinding;
     private int currentPathIndex = 0;
     public bool isMoving = false;
@@ -25,9 +25,9 @@ public class RTSUnit : MonoBehaviour
     }
 	private void Start() {
         spriteTransform = transform.Find("Sprite").transform;
-        pb = GameObject.Find("Grid").GetComponent<paintbrush>();
+        pb = GameObject.Find("Grid").GetComponent<Paintbrush>();
         UpdateTakenArea(true);
-        pathfinding = new Pathfinding(pb.BuildingsTilemap);
+        pathfinding = new Pathfinding();
     }
     
     

@@ -12771,7 +12771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 136e943d642d44e3c88c575371c3c419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  credits: 2000
+  credits: 20000
   textMesh: {fileID: 0}
 --- !u!1001 &1019689309
 PrefabInstance:
@@ -13244,6 +13244,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1294318061
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161223189053016353, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 986033187688594993, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: urinium
+      value: 20000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6970674376076181866, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
+      propertyPath: m_Name
+      value: Urinium Crystal (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f220f004bc3764f00b50efcb30b8bae7, type: 3}
 --- !u!1 &1344294089
 GameObject:
   m_ObjectHideFlags: 0
@@ -16361,9 +16422,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridLayout: {fileID: 1932168015}
-  MainTilemap: {fileID: 277471900}
+  GroundTailmap: {fileID: 277471900}
   TempTilemap: {fileID: 31288293}
   BuildingsTilemap: {fileID: 545778803}
+  UnitsTilemap: {fileID: 1597903611}
   tile: {fileID: 0}
   mouseOverPanel: {fileID: 623327183}
   building: {fileID: 0}

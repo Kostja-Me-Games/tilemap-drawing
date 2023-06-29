@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class HarvesterController : MonoBehaviour
 {
-    public paintbrush pb;
+    public Paintbrush pb;
     public CreditsController creditsController;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -39,7 +39,7 @@ public class HarvesterController : MonoBehaviour
     void Start()
     {
         Debug.Log("Specific unit controller started: Harvester");
-        pb = GameObject.Find("Grid").GetComponent<paintbrush>();
+        pb = GameObject.Find("Grid").GetComponent<Paintbrush>();
         creditsController = GameObject.Find("Credits").GetComponent<CreditsController>();
         rtsUnit = transform.GetComponent<RTSUnit>();
         spriteRenderer = transform.Find("Sprite").GetComponent<SpriteRenderer>();
